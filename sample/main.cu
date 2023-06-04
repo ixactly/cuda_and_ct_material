@@ -1,0 +1,33 @@
+__global__ void plusOneArray(int* array) {
+    unsigned int u = blockDim.x * blockIdx.x + threadIdx.x;
+    array[u] += 1.0f;
+}
+
+int main() {
+    int N = 1024;
+    // init host memory
+    float host_array[1024];
+    for(int i = 0; i < N; i++)
+        host_array[i] = (float)i;
+    // init device memory
+    float* device_array;
+
+    // 1. allocate device memory
+    cudaMalloc((float**)&device_array, sizeof(int) * N);
+
+    // 2. memory copy host to device
+    cudaMemcpy(device_array, host_array, sizeof(int) * N, cudaMemcpyHostToDevice);
+
+    // 3. call kernel function
+    int blockSize = 32;
+    dim3 block(32, 1, 1);
+    dim3 grid((N + blockSize - 1) / blockSize, 1, 1);
+    plusOneArray<<<grid, block>>>(device_array);
+    // parallelize -> for (auto &e : host_array) e+= 1.0f;
+
+    // 4. memory copy device to host
+    cudaMemcpy(host_array, device_array, sizeof(int) * N, cudaMemcpyDeviceToHost);
+
+    // 5. free device memory
+    cudaFree(device_array);
+}

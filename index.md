@@ -1,4 +1,6 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax:{inlineMath:[['\$','\$'],['\\(','\\)']],processEscapes:true},CommonHTML: {matchFontHeight:false}});</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 
 # GPUによるプログラミング入門
 ## CUDAとは
@@ -184,17 +186,23 @@ CUDA全体についてわかりやすくまとまっているサイト [See This
 
 # CT画像再構成
 ## X線CTとは
-**X線CT（X-ray Computed Tomography）** は、我々の研究室でのコンテクストでは、産業分野における非破壊検査技術として扱われており、製品や材料の内部構造を詳細に可視化するために使用されます。（画像は超大型CT装置、[fraunhofer IIS](https://www.iis.fraunhofer.de/en/ff/zfp/tech/hochenergie-computertomographie.html)より引用）  
+**X線CT（X-ray Computed Tomography）** は、私たちの研究室でのコンテクストでは、産業分野における非破壊検査技術として扱われており、製品や材料の内部構造を詳細に可視化するために使用されます。（画像は超大型CT装置、[fraunhofer IIS](https://www.iis.fraunhofer.de/en/ff/zfp/tech/hochenergie-computertomographie.html)より引用）  
+
 <div align="center">
 <img src="fraunhofer.jpeg" width="60%"> 
 </div>
   
-
 X線CTは、X線と検出器を組み合わせて使用します。被検査物にX線を照射し、その後、検出器がX線の**透過率**を測定します。これにより、被検査物の内部でのX線の**線減弱係数**（物質の密度に比例）や散乱強度のパターンを得ることができます。
 
-CT再構成のプロセスについて説明します。まず、複数の角度からのX線撮影を行います。非検査物がX線源と検出器の間を回転しながら、被検査物を一定の回転間隔でスキャンします。このプロセスにより、被検査物周囲の透過率の断層画像が取得されます。取得された断層画像から再構成計算を行うことにより、最終的な三次元の内部構造を表現することができます。  
+CT再構成のプロセスについて説明します。まず、複数の角度からのX線撮影を行います。非検査物がX線源と検出器の間を回転しながら、被検査物を一定の回転間隔でスキャンします。このプロセスにより、被検査物周囲の透過率の断層画像が取得されます。取得された断層画像から再構成計算を行うことにより、最終的な三次元の内部構造を表現することができます。   
+
+![ct](ct_fig.png)  
 
 再構成の方法には、**フィルター逆投影法（FBP: Filtered Back Projection）** と **逐次近似再構成法（IR: Iterative Reconstruction）** に大別されます。今回の実装では逐次近似再構成法について実装していきたいと思います。  
+
+再構成の説明に入る前に一度、投影像で得られる像の値（物体通過前のX線の光量$I_0$, 通過後のX線の光量$I$）と線減弱係数 $\mu$ との関係について説明します。X線が物体を通り抜ける前後の光量の関係は次の式で表せることが知られています。
+
+これを**ランベルト・ベールの法則**と言います。
 
 ## フィルター逆投影法
 今回はフィルター逆投影法については実装しませんが、簡単に説明だけします。フィルター逆投影法は、得られた投影像に対して特定の周波数フィルターを掛けた後に、投影線上に投影値を加算していく手法になります。  
@@ -206,5 +214,5 @@ CT再構成のプロセスについて説明します。まず、複数の角度
 **投影原理**
 ![radon](radon.png)
 
-## 逐次再構成法
-
+## 逐次近似再構成法
+逐次近似法では、

@@ -183,8 +183,10 @@ CUDA全体についてわかりやすくまとまっているサイト [See This
 # CT画像再構成
 ## X線CTとは
 **X線CT（X-ray Computed Tomography）** は、我々の研究室でのコンテクストでは、産業分野における非破壊検査技術として扱われており、製品や材料の内部構造を詳細に可視化するために使用されます。（画像は超大型CT装置、[fraunhofer IIS](https://www.iis.fraunhofer.de/en/ff/zfp/tech/hochenergie-computertomographie.html)より引用）  
-
-<img src="fraunhofer.jpeg" width="80%">   
+<div align="center">
+<img src="fraunhofer.jpeg" width="60%"> 
+</div>
+  
 
 X線CTは、X線と検出器を組み合わせて使用します。被検査物にX線を照射し、その後、検出器がX線の**透過率**を測定します。これにより、被検査物の内部でのX線の**線減弱係数**（物質の密度に比例）や散乱強度のパターンを得ることができます。
 
@@ -197,9 +199,10 @@ CT再構成のプロセスについて説明します。まず、複数の角度
   
 
 理論を学ぶ場合はこちら（[Radon変換](http://racco.mikeneko.jp/Kougi/2012s/IPPR/2012s_ippr12.pdf)と[フィルター逆投影](http://racco.mikeneko.jp/Kougi/2012s/IPPR/2012s_ippr13.pdf)）がよくまとまっていて分かりやすいと思います。  
+$g(s, \theta)$  
 
 以下概略  
-投影像分布を$g(s, \theta)$ 、再構成領域における物体の分布を$f(x, y)$としたとき、$f(x, y)$を2次元フーリエ変換したときに現れる関数$F(u=\xi cos\theta, v=\xi sin\theta)$が、投影像の1次元フーリエ変換$G(\xi, \theta)$と合致すること（投影定理）を利用することにより導出される。極座標変換時に現れるRampフィルタ$\lvert\xi\rvert,(-\infty<\xi<\infty)$ が理想的なフィルタである。が、有限の領域でカットする必要があるので、特定のフィルタを選択する必要がある。    
+投影像分布を $g(s, \theta)$ 、再構成領域における物体の分布を $f(x, y)$ としたとき、 $f(x, y)$ を2次元フーリエ変換したときに現れる関数 $F(u=\xi cos\theta, v=\xi sin\theta)$ が、投影像の1次元フーリエ変換 $G(\xi, \theta)$ と合致すること（投影定理）を利用することにより導出される。極座標変換時に現れるRampフィルタ $\lvert\xi\rvert,(-\infty<\xi<\infty)$ が理想的なフィルタである。が、有限の領域でカットする必要があるので、特定のフィルタを選択する必要がある。    
 
 **投影原理**
 ![radon](radon.png)

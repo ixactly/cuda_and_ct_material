@@ -37,28 +37,33 @@ CUDAはNVIDIA社製のGPUにのみ対応しているため、GeForceやTesla, Qu
 実際に書くと以下のようなプログラムになるでしょう。ここでは与えた配列に対して全要素に1を足すというプログラムを例として示します。
 
 ```c++
-__global__ void plusOneArray(int* array) {
+#include <cuda_runtime.h>
+#include <stdio.h>
+
+__global__ void plusOneArray(float* array) {
     unsigned int u = blockDim.x * blockIdx.x + threadIdx.x;
     array[u] += 1.0f;
+    printf("thread idx: %d, array[%d]: %f\n", u, u, array[u]);
 }
 
 int main() {
     int N = 1024;
     // init host memory
     float host_array[1024];
-    for (int i = 0; i < N; i++) host_array[i] = (float) i;
+    for(int i = 0; i < N; i++)
+        host_array[i] = (float)i;
     // init device memory
     float* device_array;
 
     // 1. allocate device memory
-    cudaMalloc((float**)&device_array, sizeof(int) * N);
+    cudaMalloc((float**)&device_array, sizeof(float) * N);
 
     // 2. memory copy host to device
-    cudaMemcpy(device_array, host_array, sizeof(int) * N, cudaMemcpyHostToDevice);
+    cudaMemcpy(device_array, host_array, sizeof(float) * N, cudaMemcpyHostToDevice);
 
     // 3. call kernel function
     int blockSize = 32;
-    dim3 block(32, 1, 1);
+    dim3 block(blockSize, 1, 1);
     dim3 grid((N + blockSize - 1) / blockSize, 1, 1);
     plusOneArray<<<grid, block>>>(device_array);
     // parallelize -> for (auto &e : host_array) e+= 1.0f;
@@ -122,7 +127,11 @@ unsigned int v = blockDim.y * blockIdx.y + threadIdx.y;
 もう少し厳密に話すと、スレッドが32個ずつ、ワープ(warp)と呼ばれるグループにまとめられた上で実行されます。ワープスケジューラによって32個のスレッド分のワープに分割され、利用可能なハードウェアのリソースに割り当てられていきます。
 
 ### 2. コードの検証
+さて、動作を確認していきましょう。前述したように`nvcc`コマンドを用いて`nvcc main.cu`でコンパイルすると、実行ファイル`./a.out`が生成されますので、実行します。
+カーネル関数内では`printf`が使えますので今回は`printf`でスレッドの番地と実際に配列の要素に対して+1されているかどうかを確認した結果です。for文なしに全ての配列にアクセスして計算できています。特徴的なのは、ブロックごとにカーネルが走っているのがなんとなく分かるところでしょうか。
+![cuda-grid](result.png) 
 
+そしてホストメモリにコピーした後の結果も見てみましょう。
 
 というわけでざっくりとCUDAについて見てきました。（公式のCUDA Cプログラミングガイドの50分の1くらいです）  
 どう並列化させるかがミソだと思うので、色々試してみてください。  

@@ -4,7 +4,7 @@
 __global__ void plusOneArray(float* array) {
     unsigned int u = blockDim.x * blockIdx.x + threadIdx.x;
     array[u] += 1.0f;
-    printf("block idx: %d, thread idx: %d, device_array[%d]: %f\n", blockIdx.x, u, u, array[u]);
+    // printf("block idx: %d, thread idx: %d, device_array[%d]: %f\n", blockIdx.x, u, u, array[u]);
 }
 
 int main() {
@@ -33,7 +33,7 @@ int main() {
     cudaMemcpy(host_array, device_array, sizeof(int) * N, cudaMemcpyDeviceToHost);
 
     for(int i = 0; i < N; i++)
-        printf("host_array[%d]: %f\n", i, host_array[u]);
+        printf("host_array[%d]: %f\n", i, host_array[i]);
 
     // 5. free device memory
     cudaFree(device_array);

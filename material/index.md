@@ -120,6 +120,7 @@ threadIdx.x
 ```c
 unsigned int u = blockDim.x * blockIdx.x + threadIdx.x;
 unsigned int v = blockDim.y * blockIdx.y + threadIdx.y;
+unsigned int w = blockDim.z * blockIdx.z + threadIdx.z;
 ```
 このようにグリッド内のスレッドを一意に識別することができるので、スレッドとデータ要素とのマッピングが可能になります。
 今回のコードではスレッドの番地を用いて配列の番地を指定して、要素に+1しています。  
@@ -131,7 +132,7 @@ unsigned int v = blockDim.y * blockIdx.y + threadIdx.y;
 カーネル関数内では`printf`が使えますので今回は`printf`でスレッドの番地と実際に配列の要素に対して+1されているかどうかを確認した結果です。for文なしに全ての配列にアクセスして計算できています。特徴的なのは、ブロックごとにカーネルが走っているのがなんとなく分かるところでしょうか。
 ![cuda-grid](result.png) 
 
-そしてホストメモリにコピーした後の結果も見てみましょう。
+そしてホストメモリにコピーした後の結果も見てみましょう。ホスト側で計算はしていませんが、ちゃんと`host_array`の値が更新されたことを確認できました。
 
 というわけでざっくりとCUDAについて見てきました。（公式のCUDA Cプログラミングガイドの50分の1くらいです）  
 どう並列化させるかがミソだと思うので、色々試してみてください。  

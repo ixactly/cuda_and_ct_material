@@ -1,1 +1,0 @@
-__device__ void XD(int a) { printf("a"); }

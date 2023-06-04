@@ -4,7 +4,7 @@
 __global__ void plusOneArray(float* array) {
     unsigned int u = blockDim.x * blockIdx.x + threadIdx.x;
     array[u] += 1.0f;
-    // printf("block idx: %d, thread idx: %d, device_array[%d]: %f\n", blockIdx.x, u, u, array[u]);
+    printf("block idx: %d, thread idx: %d, device_array[%d]: %f\n", blockIdx.x, u, u, array[u]);
 }
 
 int main() {

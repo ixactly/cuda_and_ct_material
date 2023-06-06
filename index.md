@@ -289,7 +289,7 @@ SIRT法は予測投影データ $\boldsymbol p$ と実測投影データ $\bolds
 
 感覚的にもこの方法で再構成画像が得られそうですが、簡便に理論に立ち返ってみます。  
 SIRT法は、モデル $A \boldsymbol\mu=\boldsymbol{p}$ を最小二乗法で解く手法です。すなわち評価関数 
-\\[ J(\boldsymbol{\mu})={{\|\boldsymbol{p}-A\boldsymbol{\mu}\|}_2^2}$
+\\[ J(\boldsymbol{\mu})={{\|\boldsymbol{p}-A\boldsymbol{\mu}\|}_2^2}
 \\]  
 を定義し、評価関数を最小化する画像 
 \\[
@@ -316,4 +316,3 @@ A^\top A \boldsymbol\mu=A^\top\boldsymbol{p}
 今回は画像処理でよく見るLennaさんを投影したデータを用いて再構成をしてみたいと思います。  
 ここで投影データの見方について説明します。CTにおける投影像列のことを **サイノグラム(Sinogram)** と呼びます。3次元の場合は検出器に投影像が写るのでイメージしやすいですが、2次元の場合は特徴的なデータ配列になります。
 
-投影データにノイズを仮定して解を求める手法や、投影データによっては解が一意に定まらない場合の再構成法があります。今回はART(Algebraic Reconstruction Technique)法を実装してみよう。

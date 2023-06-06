@@ -189,7 +189,7 @@ CUDA全体についてわかりやすくまとまっているサイト [See This
 **X線CT（X-ray Computed Tomography）** は、私たちの研究室でのコンテクストでは、産業分野における非破壊検査技術として扱われており、製品や材料の内部構造を詳細に可視化するために使用されます。（画像は超大型CT装置、[fraunhofer IIS](https://www.iis.fraunhofer.de/en/ff/zfp/tech/hochenergie-computertomographie.html)より引用）  
 
 <div align="center">
-<img src="fraunhofer.jpeg" width="60%"> 
+<img src="image/fraunhofer.jpeg" width="60%" title="ct"> 
 </div>
    
 X線CTは、X線と検出器を組み合わせて使用します。被検査物にX線を照射し、その後、検出器がX線の**透過率**を測定します。これにより、被検査物の内部でのX線の**線減弱係数**（物質の密度に比例）や散乱強度のパターンを得ることができます。
@@ -356,6 +356,7 @@ CPUrecon/sirt.hに実装内容があります。
 上記による計算を行なった結果がこちらです。  
 復元できていますが、何となくぼやけているかと思います。SIRT法の特徴として、収束が遅いことと、高周波な成分の復元が難しいことが知られています。
 
+再構成画像
 ![recon](image/lenna_recon_float_256x256.png)
 
 ## まとめ

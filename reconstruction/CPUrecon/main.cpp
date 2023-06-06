@@ -1,6 +1,7 @@
 #include "Image.h"
 #include "Params.h"
 #include "sirt.h"
+#include <chrono>
 
 int main() {
     Geometry geom = {500.0, 1000.0, 1.0, 1.0, 256, 256, 512, 360}; // see Geometry in "Params.h"
@@ -13,7 +14,15 @@ int main() {
     float alpha = 5e-7;
     int iter = 60;
     img.setOnes();
-    SIRT(img, proj_measured, geom, alpha, iter);
-    img.save("../../raw/lenna_recon_float_256x256.raw");
 
+    std::chrono::system_clock::time_point  start, end;
+    start = std::chrono::system_clock::now();
+
+    SIRT(img, proj_measured, geom, alpha, iter);
+
+    end = std::chrono::system_clock::now();
+    double elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
+    std::cout << "time: " << elapsed / 1000.0 << "s." << std::endl;
+
+    img.save("../../raw/lenna_recon_float_256x256.raw");
 }

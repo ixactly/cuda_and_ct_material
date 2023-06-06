@@ -11,7 +11,7 @@ int main() {
     proj_measured.read(input_file_name, geom.detect_width, geom.detect_proj);
 
     float alpha = 5e-7;
-    int iter = 50;
+    int iter = 60;
     img.setOnes();
     SIRT(img, proj_measured, geom, alpha, iter);
     img.save("../../raw/lenna_recon_float_256x256.raw");

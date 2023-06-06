@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
-project(ImageProcessing)
+project(reconstruction)
 
-set(CMAKE_CXX_STANDARD 14)
-add_executable(main main.cpp)
-add_subdirectory(util)
-add_subdirectory(process)
+add_executable(cpp_recon main.cpp)
+target_include_directories(cpp_recon PUBLIC ../util)
 
-target_link_libraries(main util processor)
+

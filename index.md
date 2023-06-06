@@ -289,7 +289,7 @@ SIRT法は予測投影データ $\boldsymbol p$ と実測投影データ $\bolds
 
 感覚的にもこの方法で再構成画像が得られそうですが、簡便に理論に立ち返ってみます。  
 SIRT法は、モデル $A \boldsymbol\mu=\boldsymbol{p}$ を最小二乗法で解く手法です。すなわち評価関数 
-\\[ J(\boldsymbol{\mu})={{|\boldsymbol{p}-A\boldsymbol{\mu}|}_2^2}
+\\[ J(\boldsymbol{\mu}) = {|\boldsymbol p - A \boldsymbol{\mu}|}_2^2 
 \\]  
 を定義し、評価関数を最小化する画像 
 \\[

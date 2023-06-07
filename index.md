@@ -306,7 +306,7 @@ A^\top A \boldsymbol\mu=A^\top\boldsymbol{p}
 ここで $\alpha$ はステップサイズになります。収束性を保証するにはある定数以下にする必要があります。  
 
 この式の意味をCT再構成の枠組みで再考察してみましょう。  
-重要なのは右辺第二項です。誤差ベクトルについて、 $\boldsymbol e = \boldsymbol p - A\boldsymbol \mu$ のように実測投影データと予測投影データの**差分値**として算出したのち、その誤差ベクトルの逆投影 $A^\top \boldsymbol{e}$ を画像に加算することによって画像を更新しています。  
+重要なのは右辺第二項です。誤差ベクトルについて、 $\boldsymbol r = \boldsymbol p - A\boldsymbol \mu$ のように実測投影データと予測投影データの**差分値**として算出したのち、その誤差ベクトルの逆投影 $A^\top \boldsymbol{r}$ を画像に加算することによって画像を更新しています。  
 以上からSIRT法は、原画像 $\boldsymbol \mu$ を実測投影と予測投影との最小二乗問題を解くことで得る手法であることを示しました。
 
 
@@ -321,7 +321,7 @@ A^\top A \boldsymbol\mu=A^\top\boldsymbol{p}
 
 サイノグラム
 ![sino](image/sino.png)
-  
+[CPUrecon/sirt.h](https://github.com/ixactly/cuda_and_ct_material/blob/master/reconstruction/CPUrecon/sirt.h)
 CPUrecon/sirt.hに実装内容があります。  
 前述した実装の流れに従い、順投影である`forward`関数、実測と投影データの差分を求める`calc_error`関数、誤差ベクトルを逆投影する`backward`関数、逆投影によって求めた修正項を加算する`feedback`関数に分かれています。以上の機能をまとめた`SIRT`関数では、この4つの関数を繰り返し計算することにより再構成が行われます。  
 
@@ -373,3 +373,5 @@ Industrial X-ray Computed Tomography
    環境依存なところも大きく、あえてインストールや環境構築に関する解説は薄めにしました。ここを乗り切れば難しいところは少ないと思います！
 
 2. CPUで実装されているSIRT法をCUDAに移植してみよう。（ご自身で進めているプロジェクトなど、他に使いたい局面があった場合、その実装をしてみてください。どのようなことを並列化したのか、また速度の変化などの結果を教えてください。）
+
+[ソースコード](https://github.com/ixactly/cuda_and_ct_material)
